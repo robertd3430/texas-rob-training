@@ -19,6 +19,9 @@ export async function login(formData: FormData) {
   }
 
   const supabase = await createClient();
+  if (!supabase) {
+    redirect('/login?error=Supabase+is+not+configured');
+  }
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
   if (error) {
     redirect(`/login?error=${encodeURIComponent(error.message)}`);
@@ -38,6 +41,9 @@ export async function signup(formData: FormData) {
   }
 
   const supabase = await createClient();
+  if (!supabase) {
+    redirect('/signup?error=Supabase+is+not+configured');
+  }
   const { data, error } = await supabase.auth.signUp(parsed.data);
   if (error) {
     redirect(`/signup?error=${encodeURIComponent(error.message)}`);

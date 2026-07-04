@@ -9,6 +9,11 @@ import { Button } from '@/components/ui/button';
 // closed instead of rendering protected pages. RLS remains the final gate.
 export default async function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
+
+  if (!supabase) {
+    redirect('/login');
+  }
+
   const { data } = await supabase.auth.getClaims();
   const claims = data?.claims;
 
