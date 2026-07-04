@@ -56,7 +56,7 @@ describe('FiveThreeOneForm', () => {
     expect(await axe(container)).toHaveNoViolations();
   });
 
-  it('shows a hint instead of the preview when the selected lift has no training max ', () => {
+  it('shows a hint instead of the preview when the selected lift has no training max', () => {
     render(<FiveThreeOneForm mainLifts={mainLifts} trainingMaxes={{}} />);
 
     expect(screen.getByText(/enter and save a training max/i)).toBeInTheDocument();
