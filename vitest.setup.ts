@@ -1,4 +1,7 @@
 import '@testing-library/jest-dom/vitest';
+import { toHaveNoViolations } from 'jest-axe';
+
+expect.extend(toHaveNoViolations);
 
 // jsdom doesn't implement these; base-ui's Select/Checkbox (floating-ui +
 // pointer-capture-based) popups call them during open/position/dismiss.

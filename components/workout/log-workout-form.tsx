@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { todayIsoDate } from '@/lib/date';
 import { logWorkoutSchema, type LogWorkoutInput } from '@/lib/validation/workout';
 
 export type ExerciseOption = { id: string; name: string; category: string };
@@ -30,10 +31,6 @@ export type RoutineOption = {
   name: string;
   exercises: { exerciseId: string; targetSets: number; targetReps: number }[];
 };
-
-function todayIsoDate() {
-  return new Date().toISOString().slice(0, 10);
-}
 
 function emptySet() {
   return { reps: 0, weight: 0, isWarmup: false, isAmrap: false };

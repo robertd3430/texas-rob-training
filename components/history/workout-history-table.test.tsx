@@ -1,3 +1,4 @@
+import { axe } from 'jest-axe';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
@@ -21,6 +22,11 @@ function cellsOf(row: HTMLElement) {
 }
 
 describe('WorkoutHistoryTable', () => {
+  it('has no accessibility violations', async () => {
+    const { container } = render(<WorkoutHistoryTable rows={rows} />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
   it('renders every row with the requested columns', () => {
     render(<WorkoutHistoryTable rows={rows} />);
 

@@ -1,3 +1,4 @@
+import { currentWeekStartIsoDate } from '@/lib/date';
 import { createClient } from '@/lib/supabase/server';
 import {
   RecentWorkoutsCard,
@@ -10,16 +11,6 @@ import {
 import { PersonalBestsCard, type PersonalBest } from '@/components/dashboard/personal-bests-card';
 
 const RECENT_WORKOUTS_LIMIT = 5;
-
-// Matches Postgres date_trunc('week', ...), which truncates to the Monday
-// of the current ISO week — so week_start rows can be looked up directly.
-function currentWeekStart(): string {
-  const now = new Date();
-  const daysSinceMonday = (now.getDay() + 6) % 7;
-  const monday = new Date(now);
-  monday.setDate(now.getDate() - daysSinceMonday);
-  return monday.toISOString().slice(0, 10);
-}
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -38,7 +29,7 @@ export default async function DashboardPage() {
     supabase
       .from('weekly_volume_view')
       .select('total_volume, total_sets, workout_count')
-      .eq('week_start', currentWeekStart())
+      .eq('week_start', currentWeekStartIsoDate())
       .maybeSingle(),
     supabase
       .from('personal_bests_view')

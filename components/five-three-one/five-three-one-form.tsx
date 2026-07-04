@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { todayIsoDate } from '@/lib/date';
 import { computeFiveThreeOneSets, type FiveThreeOneWeek } from '@/lib/five-three-one';
 
 export type MainLift = { id: string; name: string; category: string };
@@ -23,10 +24,6 @@ export type MainLift = { id: string; name: string; category: string };
 type TrainingMaxFormValues = { weights: Record<string, number> };
 
 const WEEKS: FiveThreeOneWeek[] = [1, 2, 3, 4];
-
-function todayIsoDate() {
-  return new Date().toISOString().slice(0, 10);
-}
 
 export function FiveThreeOneForm({
   mainLifts,

@@ -38,9 +38,17 @@ export async function signup(formData: FormData) {
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signUp(parsed.data);
+  const { data, error } = await supabase.auth.signUp(parsed.data);
   if (error) {
     redirect(`/signup?error=${encodeURIComponent(error.message)}`);
+  }
+
+  // When email confirmation is disabled (e.g. local dev), signUp returns an
+  // active session immediately and there's no email to check — go straight
+  // in. Otherwise the account needs confirmation before it can log in.
+  if (data.session) {
+    revalidatePath('/', 'layout');
+    redirect('/');
   }
 
   redirect('/signup?message=Check your email to confirm your account');

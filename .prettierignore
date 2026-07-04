@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+build
+coverage
+.vercel
+package-lock.json
+
+# hand-authored project docs, not scaffold output
+CLAUDE.md
+PHASE_PROMPTS.md
+supabase/.temp

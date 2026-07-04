@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { WeeklyVolumeChart } from '@/components/history/weekly-volume-chart';
 import { WorkoutHistoryTable, type HistoryRow } from '@/components/history/workout-history-table';
+import { computeSetVolume } from '@/lib/volume';
 
 export default async function HistoryPage() {
   const supabase = await createClient();
@@ -26,7 +27,7 @@ export default async function HistoryPage() {
     exerciseName: set.exercises.name,
     reps: set.reps,
     weight: set.weight,
-    volume: set.reps * set.weight,
+    volume: computeSetVolume(set.reps, set.weight),
   }));
 
   const weeklyVolumeData = (weeklyVolume ?? [])

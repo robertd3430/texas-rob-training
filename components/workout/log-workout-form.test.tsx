@@ -1,3 +1,4 @@
+import { axe } from 'jest-axe';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -49,6 +50,11 @@ async function selectExerciseInBlock(
 describe('LogWorkoutForm', () => {
   beforeEach(() => {
     mockedLogWorkout.mockReset();
+  });
+
+  it('has no accessibility violations', async () => {
+    const { container } = render(<LogWorkoutForm exercises={exercises} routines={routines} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 
   it('shows a validation error when submitting without an exercise selected', async () => {
